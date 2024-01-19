@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { Book } from "../types/Book";
 
 type Props = {
@@ -24,6 +24,16 @@ export const BookTable = ({ books }: Props) => {
           </div>
         );
       };
+
+      const [statusBooks, setStatusBooks] = useState<{ [id: number]: string }>({});
+
+      const mudarStatus = (id: number, novoStatus: string) => {
+        setStatusBooks((prevStatus) => ({
+          ...prevStatus,
+          [id]: novoStatus,
+        }));
+      };
+
     return (
         <table className="w-full border border-gray-400 rounded-md overflow-hidden">
             <thead>
@@ -46,9 +56,10 @@ export const BookTable = ({ books }: Props) => {
                             </div>
                         </td>
                         <td className="p-3">
-                            {item.status == 'lido' && <div className="px-2 py-1 inline-block rounded-md border border-green-800 bg-green-600 text-white text-xs">Lido</div>}
-                            {item.status == 'lendo' && <div className="px-2 py-1 inline-block rounded-md border border-orange-800 bg-orange-600 text-white text-xs">Lendo</div>}
-                            {item.status == 'quero' && <div className="px-2 py-1 inline-block rounded-md border border-blue-800 bg-blue-600 text-white text-xs">Quero Ler</div>}
+                            {item.status == 'lido' && <div className="px-2 py-1 inline-block rounded-md border border-green-800 bg-green-600 text-white text-xs" onClick={() => mudarStatus(item.id, item.status)}>{statusBooks[item.id] || "Não lido"}</div>}
+                            {item.status == 'lendo' && <div className="px-2 py-1 inline-block rounded-md border border-orange-800 bg-orange-600 text-white text-xs" onClick={() => mudarStatus(item.id, item.status)}>{statusBooks[item.id] || "Não lido"}</div>}
+                            {item.status == 'quero' && <div className="px-2 py-1 inline-block rounded-md border border-blue-800 bg-blue-600 text-white text-xs" onClick={() => mudarStatus(item.id, item.status)}>{statusBooks[item.id] || "Não lido"}</div>}
+                            <span > </span>
                         </td>
                         <td className="p-3">
                             {item.status == 'lido' ? renderStars(item.rate || 0) : ' --- '}
