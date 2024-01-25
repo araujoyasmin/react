@@ -5,3 +5,17 @@
 body {
     @apply bg-gray-800 text-white; /* Use @apply para aplicar classes do Tailwind */
 }
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+  }
+
+.red{
+    color: red;
+}
+
+.blue{
+    background: blue;
+    color: white;
+}
